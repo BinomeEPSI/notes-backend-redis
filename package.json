@@ -1,0 +1,19 @@
+{
+  "name": "google-keep-redis",
+  "version": "1.0.0",
+  "description": "EPSI NoSQL Redis TP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "author": "Sylvain METAYER",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.6.0",
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "redis": "^2.8.0"
+  }
+}
