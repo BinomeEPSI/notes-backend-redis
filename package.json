@@ -4,8 +4,8 @@
   "description": "EPSI NoSQL Redis TP",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "PORT=12345 ./node_modules/.bin/mocha",
+    "start": "PORT=12345 node index.js"
   },
   "repository": {
     "type": "git",

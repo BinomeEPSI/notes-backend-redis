@@ -9,30 +9,15 @@ let async = require("async");
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
-client.FLUSHDB((err, reply) => {
-    if (err) throw err;
-});
-
-client.setAsync("count", 0).then(() => {
-    console.log("Counter initialized");
-});
-
-client.on("error", () => {
-    console.log("Error");
-    console.log(err);
-});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/notes', (req, res) => {
     var data = req.body.data;
-    console.log(data);
     client.getAsync("count").then((resultat) => {
         var noteId = resultat;
         var note = "notes:" + noteId;
         client.multi().set(note, data).incr("count").execAsync().then((result) => {
-            console.log(noteId);
             res.send(noteId);
         });
     });
@@ -56,7 +41,6 @@ app.get("/notes", (req, res) => {
                 callback();
             });
         }, (err) => {
-            console.log(JSON.stringify(notes_data));
             res.send(JSON.stringify(notes_data));
         });
     });
@@ -76,6 +60,29 @@ app.get("/notes/:id", (req, res) => {
     });
 });
 
-app.listen(12345, () => {
-    console.log('Example app listening on port 3000!')
+client.on("error", () => {
+    console.log("Error");
+    console.log(err);
 });
+
+var server = undefined;
+let start = () => {
+    server = app.listen(process.env.PORT, () => {
+        console.log(`'Note' listening on port ${process.env.PORT} !`);
+        client.setAsync("count", 0).then(() => {
+            console.log("Counter initialized");
+        });
+    });
+}
+
+let stop = () => {
+    server.close();
+    client.quit();
+}
+
+if (require.main === module) {
+    start();
+}
+
+module.exports.start = start;
+module.exports.close = stop;
