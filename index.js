@@ -22,7 +22,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/notes', (req, res) => {
-    console.log(req.body.data);
     var data = req.body.data;
     client.getAsync("count").then((resultat) => {
         var noteId = resultat;
@@ -42,23 +41,35 @@ app.get("/notes", (req, res) => {
         }
 
         notes_data = [];
-        console.log(notes);
         async.each(notes, (item, callback) => {
-            console.log(item);
             client.getAsync(item).then((note_data) => {
-                console.log(note_data);
-                notes_data.push({ note: note_data });
+                var obj = {};
+                obj[item] = note_data;
+                notes_data.push(obj);
             }).then(() => {
-                return;
+                callback();
             });
         }, (err) => {
+            console.log(JSON.stringify(notes_data));
             res.send(JSON.stringify(notes_data));
         });
     });
-
 });
 
+app.get("/notes/:id", (req, res) => {
+    var id = parseInt(req.params.id);
+    if (!Number.isInteger(id)) {
+        res.send({ "error": "expect integer, got " + id });
+        return;
+    }
 
-app.listen(1234, () => {
+    client.getAsync("notes:" + id).then((note_data) => {
+        var obj = {};
+        obj[id] = note_data;
+        res.send(obj);
+    });
+});
+
+app.listen(12345, () => {
     console.log('Example app listening on port 3000!')
 });
