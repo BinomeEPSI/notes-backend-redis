@@ -9,6 +9,10 @@ let async = require("async");
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
+client.FLUSHDB((err, reply) => {
+    if (err) throw err;
+});
+
 client.setAsync("count", 0).then(() => {
     console.log("Counter initialized");
 });
@@ -23,10 +27,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/notes', (req, res) => {
     var data = req.body.data;
+    console.log(data);
     client.getAsync("count").then((resultat) => {
         var noteId = resultat;
         var note = "notes:" + noteId;
         client.multi().set(note, data).incr("count").execAsync().then((result) => {
+            console.log(noteId);
             res.send(noteId);
         });
     });
@@ -65,7 +71,7 @@ app.get("/notes/:id", (req, res) => {
 
     client.getAsync("notes:" + id).then((note_data) => {
         var obj = {};
-        obj[id] = note_data;
+        obj["notes:" + id] = note_data;
         res.send(obj);
     });
 });

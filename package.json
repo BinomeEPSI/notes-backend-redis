@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sylvainmetayer/notes-backend-redis"
+  },
   "author": "Sylvain METAYER",
   "license": "MIT",
   "dependencies": {
@@ -15,5 +19,10 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.1",
+    "supertest": "^3.0.0"
   }
 }
