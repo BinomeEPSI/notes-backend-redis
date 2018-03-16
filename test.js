@@ -6,7 +6,7 @@ const redis = require('redis')
 const { it, describe, after, before } = require('mocha')
 
 describe('Testing server...', () => {
-  var endpoint = 'http://localhost:12345'
+  var endpoint = `http://localhost:${process.env.PORT}`
 
   before((done) => {
     let client = redis.createClient()
