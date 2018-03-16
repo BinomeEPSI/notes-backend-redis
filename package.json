@@ -1,7 +1,7 @@
 {
-  "name": "google-keep-redis",
-  "version": "1.0.0",
-  "description": "EPSI NoSQL Redis TP",
+  "name": "notes-backend-redis",
+  "version": "0.2.0",
+  "description": "EPSI NoSQL Redis TP : Simulate the backend of a Google Keep application",
   "main": "index.js",
   "scripts": {
     "start": "PORT=12345 node index.js",
