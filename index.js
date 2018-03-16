@@ -61,6 +61,18 @@ app.get('/notes/:id', (req, res) => {
   })
 })
 
+app.delete('/notes/:id', (req, res) => {
+  var id = parseInt(req.params.id)
+  if (!Number.isInteger(id)) {
+    res.status(400).send({ 'error': 'expect integer, got ' + id })
+    return
+  }
+
+  client.delAsync(`notes:${id}`).then((data) => {
+    res.send('OK')
+  })
+})
+
 client.on('error', (err) => {
   console.log('Error')
   console.log(err)

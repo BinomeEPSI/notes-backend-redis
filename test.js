@@ -78,4 +78,31 @@ describe('Testing server...', () => {
         done()
       })
   })
+
+  it('Should delete a note', (done) => {
+    var noteId = 0
+    request(endpoint)
+      .delete(`/notes/${noteId}`)
+      .send()
+      .end((err, res) => {
+        if (err) throw err
+        expect(res.status).equal(200)
+        expect(res.text).equal('OK')
+        done()
+      })
+  })
+
+  it('Should get an empty result because it was previously deleted', (done) => {
+    var expected = '{"notes:0":null}'
+    // The first note created
+    request(endpoint)
+      .get('/notes/0')
+      .send()
+      .end((err, res) => {
+        if (err) throw err
+        expect(res.status).equal(200)
+        expect(res.text).equal(expected)
+        done()
+      })
+  })
 })
