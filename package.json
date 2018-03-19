@@ -1,6 +1,6 @@
 {
   "name": "notes-backend-redis",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "description": "EPSI NoSQL Redis TP : Simulate the backend of a Google Keep application",
   "main": "index.js",
   "scripts": {
