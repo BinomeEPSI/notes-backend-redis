@@ -24,12 +24,11 @@ describe('Testing server...', () => {
   })
 
   it('Should add an element', (done) => {
-    var note = {
-      data: 'A note'
-    }
+    var note = 'A note'
 
     request(endpoint)
       .post('/notes')
+      .set('Content-Type', 'text/plain')
       .send(note)
       .end((err, res) => {
         if (err) throw err

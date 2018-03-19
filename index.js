@@ -9,11 +9,10 @@ let async = require('async')
 bluebird.promisifyAll(redis.RedisClient.prototype)
 bluebird.promisifyAll(redis.Multi.prototype)
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.text())
 
 app.post('/notes', (req, res) => {
-  var data = req.body.data
+  var data = req.body
   client.getAsync('count').then((resultat) => {
     var noteId = resultat
     var note = 'notes:' + noteId
