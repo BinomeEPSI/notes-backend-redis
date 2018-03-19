@@ -9,14 +9,27 @@ let async = require('async')
 bluebird.promisifyAll(redis.RedisClient.prototype)
 bluebird.promisifyAll(redis.Multi.prototype)
 
-app.use(bodyParser.text())
-
-app.post('/notes', (req, res) => {
+app.post('/notes', bodyParser.text(), (req, res) => {
   var data = req.body
   client.getAsync('count').then((resultat) => {
     var noteId = resultat
-    var note = 'notes:' + noteId
-    client.multi().set(note, data).incr('count').execAsync().then((result) => {
+    var note = `notes:${noteId}`
+    var jsonObject = {data: data}
+    client.multi().set(note, JSON.stringify(jsonObject)).incr('count').execAsync().then((result) => {
+      res.send(noteId)
+    })
+  })
+})
+
+app.post('/notes-details', bodyParser.json(), (req, res) => {
+  var data = req.body.data
+  var author = req.body.author
+
+  client.getAsync('count').then((resultat) => {
+    var noteId = resultat
+    var note = `notes:${noteId}`
+    var jsonObject = {data: data, author: author}
+    client.multi().set(note, JSON.stringify(jsonObject)).incr('count').execAsync().then((result) => {
       res.send(noteId)
     })
   })
@@ -34,14 +47,14 @@ app.get('/notes', (req, res) => {
     async.each(notes, (item, callback) => {
       client.getAsync(item).then((noteData) => {
         var obj = {}
-        obj[item] = noteData
+        obj[item] = JSON.parse(noteData)
         notesData.push(obj)
       }).then(() => {
         callback()
       })
     }, (err) => {
       if (err) throw err
-      res.send(JSON.stringify(notesData))
+      res.send(notesData)
     })
   })
 })
@@ -55,7 +68,7 @@ app.get('/notes/:id', (req, res) => {
 
   client.getAsync('notes:' + id).then((noteData) => {
     var obj = {}
-    obj['notes:' + id] = noteData
+    obj[`notes:${id}`] = JSON.parse(noteData)
     res.send(obj)
   })
 })

@@ -25,6 +25,7 @@ describe('Testing server...', () => {
 
   it('Should add an element', (done) => {
     var note = 'A note'
+    var expectedObject = {'notes:0': { data: 'A note' }}
 
     request(endpoint)
       .post('/notes')
@@ -34,12 +35,19 @@ describe('Testing server...', () => {
         if (err) throw err
         expect(res.status).equal(200)
         expect(res.text).equal('0')
-        done()
+        request(endpoint)
+          .get(`/notes/0`)
+          .send()
+          .end((err, res) => {
+            if (err) throw err
+            expect(JSON.parse(res.text)).deep.equal(expectedObject)
+            done()
+          })
       })
   })
 
   it('Should list all elements', (done) => {
-    var expected = [{'notes:0': 'A note'}]
+    var expected = [ { 'notes:0': { data: 'A note' } } ]
     // The first note created
     request(endpoint)
       .get('/notes')
@@ -53,7 +61,7 @@ describe('Testing server...', () => {
   })
 
   it('Should get one element', (done) => {
-    var expected = {'notes:0': 'A note'}
+    var expected = { 'notes:0': { data: 'A note' } }
     // The first note created
     request(endpoint)
       .get('/notes/0')
@@ -102,6 +110,31 @@ describe('Testing server...', () => {
         expect(res.status).equal(200)
         expect(JSON.parse(res.text)).deep.equal(expected)
         done()
+      })
+  })
+
+  it('Should add a note with an author', (done) => {
+    var expected = '1'
+
+    var data = { data: 'A note from Sylvain', author: 'Sylvain' }
+
+    var expectedObject = {'notes:1': { data: 'A note from Sylvain', author: 'Sylvain' }}
+    request(endpoint)
+      .post('/notes-details')
+      .set('Content-Type', 'application/json')
+      .send(data)
+      .end((err, res) => {
+        if (err) throw err
+        expect(res.status).equal(200)
+        expect(res.text).equal(expected)
+        request(endpoint)
+          .get(`/notes/${expected}`)
+          .send()
+          .end((err, res) => {
+            if (err) throw err
+            expect(JSON.parse(res.text)).deep.equal(expectedObject)
+            done()
+          })
       })
   })
 })
