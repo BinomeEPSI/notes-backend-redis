@@ -18,7 +18,7 @@ npm install
 
 `npm test`
 
-## Lint it 
+## Lint it
 
 This project use [StandardJS](https://standardjs.com) as linter with a pre-commit hook.
 
@@ -34,3 +34,21 @@ To run linter with auto-fix : `npm run lint-fix`
 npm start
 ./test.sh # In a separate terminal
 ```
+
+## Explications
+
+### Architecture
+
+Un serveur Express répond au requêtes clientes, sur 5 routes différentes :
+
+- '/notes' en POST, qui permet la création d'une note en text/plain
+
+- '/notes-details' en POST, qui permet la création d'une note en passant des données au format application/json, ce qui permet de rajouter en plus le champ auteur.
+
+- '/note/:id' en GET, qui permet de récupérer une note selon son identifiant
+
+- '/notes' en GET, qui renvoie toutes les notes existantes.
+
+- '/notes/:id' en DELETE, qui permet de supprimer une note donnée.
+
+Un exemple d'utilisation du système est disponible dans le script `test.sh`
