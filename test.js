@@ -40,7 +40,7 @@ describe('Testing server...', () => {
   })
 
   it('Should list all elements', (done) => {
-    var expected = '[{"notes:0":"A note"}]'
+    var expected = [{'notes:0': 'A note'}]
     // The first note created
     request(endpoint)
       .get('/notes')
@@ -48,13 +48,13 @@ describe('Testing server...', () => {
       .end((err, res) => {
         if (err) throw err
         expect(res.status).equal(200)
-        expect(res.text).equal(expected)
+        expect(JSON.parse(res.text)).deep.equal(expected)
         done()
       })
   })
 
   it('Should get one element', (done) => {
-    var expected = '{"notes:0":"A note"}'
+    var expected = {'notes:0': 'A note'}
     // The first note created
     request(endpoint)
       .get('/notes/0')
@@ -62,19 +62,19 @@ describe('Testing server...', () => {
       .end((err, res) => {
         if (err) throw err
         expect(res.status).equal(200)
-        expect(res.text).equal(expected)
+        expect(JSON.parse(res.text)).deep.equal(expected)
         done()
       })
   })
 
   it('Should get an invalid element', (done) => {
-    var expected = '{"error":"expect integer, got NaN"}'
+    var expected = {'error': 'expect integer, got NaN'}
     request(endpoint)
       .get('/notes/invalid')
       .send()
       .end((err, res) => {
         if (err) throw err
-        expect(res.text).equal(expected)
+        expect(JSON.parse(res.text)).deep.equal(expected)
         done()
       })
   })
@@ -93,7 +93,7 @@ describe('Testing server...', () => {
   })
 
   it('Should get an empty result because it was previously deleted', (done) => {
-    var expected = '{"notes:0":null}'
+    var expected = {'notes:0': null}
     // The first note created
     request(endpoint)
       .get('/notes/0')
@@ -101,7 +101,7 @@ describe('Testing server...', () => {
       .end((err, res) => {
         if (err) throw err
         expect(res.status).equal(200)
-        expect(res.text).equal(expected)
+        expect(JSON.parse(res.text)).deep.equal(expected)
         done()
       })
   })
