@@ -1,6 +1,10 @@
 # notes-backend-redis
 
-[![CircleCI](https://circleci.com/gh/sylvainmetayer/notes-backend-redis.svg?style=svg)](https://circleci.com/gh/sylvainmetayer/notes-backend-redis) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub release](https://img.shields.io/github/release/sylvainmetayer/notes-backend-redis.svg) [![Depfu](https://badges.depfu.com/badges/4034a6e0304e200260c1dfeb90959459/overview.svg)](https://depfu.com/github/sylvainmetayer/notes-backend-redis) [![codecov](https://codecov.io/gh/sylvainmetayer/notes-backend-redis/branch/master/graph/badge.svg)](https://codecov.io/gh/sylvainmetayer/notes-backend-redis)
+[![CircleCI](https://circleci.com/gh/BinomeEPSI/notes-backend-redis.svg?style=svg)](https://circleci.com/gh/BinomeEPSI/notes-backend-redis)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+![GitHub release](https://img.shields.io/github/release/sylvainmetayer/notes-backend-redis.svg) 
+[![Depfu](https://badges.depfu.com/badges/776a45b0111a30103c5f19e161d9314c/overview.svg)](https://depfu.com/github/BinomeEPSI/notes-backend-redis)
+[![codecov](https://codecov.io/gh/BinomeEPSI/notes-backend-redis/branch/master/graph/badge.svg)](https://codecov.io/gh/BinomeEPSI/notes-backend-redis)
 
 TP Redis de simulation de serveur de prise de notes
 
