@@ -25,7 +25,7 @@ describe('Testing server...', () => {
 
   it('Should add an element', (done) => {
     var note = 'A note'
-    var expectedObject = {'notes:0': { data: 'A note' }}
+    var expectedObject = { 'notes:0': { data: 'A note' } }
 
     request(endpoint)
       .post('/notes')
@@ -75,7 +75,7 @@ describe('Testing server...', () => {
   })
 
   it('Should get an invalid element', (done) => {
-    var expected = {'error': 'expect integer, got NaN'}
+    var expected = { 'error': 'expect integer, got NaN' }
     request(endpoint)
       .get('/notes/invalid')
       .send()
@@ -100,7 +100,7 @@ describe('Testing server...', () => {
   })
 
   it('Should get an empty result because it was previously deleted', (done) => {
-    var expected = {'notes:0': null}
+    var expected = { 'notes:0': null }
     // The first note created
     request(endpoint)
       .get('/notes/0')
@@ -118,7 +118,7 @@ describe('Testing server...', () => {
 
     var data = { data: 'A note from Sylvain', author: 'Sylvain' }
 
-    var expectedObject = {'notes:1': { data: 'A note from Sylvain', author: 'Sylvain' }}
+    var expectedObject = { 'notes:1': { data: 'A note from Sylvain', author: 'Sylvain' } }
     request(endpoint)
       .post('/notes-details')
       .set('Content-Type', 'application/json')

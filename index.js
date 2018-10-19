@@ -14,7 +14,7 @@ app.post('/notes', bodyParser.text(), (req, res) => {
   client.getAsync('count').then((resultat) => {
     var noteId = resultat
     var note = `notes:${noteId}`
-    var jsonObject = {data: data}
+    var jsonObject = { data: data }
     client.multi().set(note, JSON.stringify(jsonObject)).incr('count').execAsync().then((result) => {
       res.send(noteId)
     })
@@ -28,7 +28,7 @@ app.post('/notes-details', bodyParser.json(), (req, res) => {
   client.getAsync('count').then((resultat) => {
     var noteId = resultat
     var note = `notes:${noteId}`
-    var jsonObject = {data: data, author: author}
+    var jsonObject = { data: data, author: author }
     client.multi().set(note, JSON.stringify(jsonObject)).incr('count').execAsync().then((result) => {
       res.send(noteId)
     })
