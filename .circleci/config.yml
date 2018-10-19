@@ -1,25 +1,47 @@
 version: 2
 jobs:
-    build-test:
+    build-10:
         docker:
             - image: circleci/node:8
             - image: redis
         steps:
             - checkout
             - run:
-                name: install-dependencies
+                name: Install dependencies
                 command: npm install
             - run: 
-                name: linter
+                name: Linter
                 command: npm run lint
             - run:
-                name: tests
+                name: Security Audit
+                command: npm audit
+            - run:
+                name: Tests
                 command: npm test
             - run:
                 name: codecoverage
                 command: npm run coverage
+    build-8: 
+        docker:
+            - image: circleci/node:8
+            - image: redis
+        steps:
+            - checkout
+            - run:
+                name: Install dependencies
+                command: npm install
+            - run: 
+                name: Linter
+                command: npm run lint
+            - run:
+                name: Security Audit
+                command: npm audit
+            - run:
+                name: Tests
+                command: npm test
 workflows:
     version: 2
-    build-deploy:
+    build:
         jobs:
-            - build-test
+            - build-10
+            - build-8
