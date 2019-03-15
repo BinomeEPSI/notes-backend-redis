@@ -13,9 +13,6 @@ jobs:
                 name: Linter
                 command: npm run lint
             - run:
-                name: Security Audit
-                command: npm audit
-            - run:
                 name: Tests
                 command: npm test
             - run:
@@ -33,9 +30,6 @@ jobs:
             - run: 
                 name: Linter
                 command: npm run lint
-            - run:
-                name: Security Audit
-                command: npm audit
             - run:
                 name: Tests
                 command: npm test
